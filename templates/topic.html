@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/styles.css') }}">
+</head>
+<body style="background-color:#D1F2EB;">
+
+	<header>
+		<div class="container">
+		<div id="brandname" align="center">
+			<h1><b>Virtual Health Medical Journal Recommender App<b></h1>
+		</div>
+		<b style="margin-top: -2px; font-size: 23px;">Recommended Article Categorization -[Article Similarity score is  Recommended Article's % match with Input search</b>
+		
+	</div>
+	</header>
+
+
+
+	<div class="results">
+
+
+	{% if topic_prediction!="" %}
+	<form action="{{ url_for('fetch_bert_article')}}" method="POST">
+	<h3 style="color:blue;margin-top: 9px;
+    font-size: 18px;"> Based on Textual/Semantic Similarity</h3>
+	<b style="color:blue;" >Article's  Similarity Score**</b>
+	<p style="color:green; margin-top: -2px; font-size: 14px;">{{topic_prediction[0]}}</p>
+
+	<b style="color:blue;">Article's Main Keywords</b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[1]}}</p>
+
+	<b style="color:blue;">Article's Summary </b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[2]}}</p>
+	<input type="submit" class="btn-info" value="Fetch Textual/Semantic Similar Article ">
+		
+	</form>
+	<p style="color:green;margin-top: 0px; font-size: 14px;">{{topic_prediction[4]}}</p>
+	<form action="{{ url_for('fetch_lsi_article')}}" method="POST">
+	<h3 style="color:blue;margin-top: -15px"> Based on Contextual Similarity</h3>
+	<b style="color:blue;">Article's  Similarity Score**</b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[5]}}</p>
+
+	<b style="color:blue;">Article's Main Keywords</b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[6]}}</p>
+
+	<b style="color:blue;">Article's Summary </b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[7]}}</p>
+	<input type="submit" class="btn-info" value="Fetch Contextually Similar Article ">
+		
+	
+	</form>
+	{%endif%}
+	{% if topic_prediction[9] %}
+	<p style="color:green;margin-top: 0px; font-size: 14px;">{{topic_prediction[9]}}</p>
+	<form action="{{ url_for('fetch_lda_article')}}" method="POST">
+	<h3 style="color:blue;margin-top: -15px"> Based on Topic Similarity</h3>
+	<b style="color:blue;">Article's  Similarity Score**</b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[10]}}</p>
+
+	<b style="color:blue;">Article's Main Keywords</b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[11]}}</p>
+
+	<b style="color:blue;">Article's Summary </b>
+	<p style="color:green;margin-top: -2px; font-size: 14px;">{{topic_prediction[12]}}</p>
+	<input type="submit" class="btn-info" value="Fetch Article With Similar Topic ">
+		
+	</form>
+	{%endif%}
+	
+
+	
+
+	</div>
+<form action="{{ url_for('main_page')}}" method="POST">
+	<input type="submit" style="margin-top: 20px; class="btn-info" value="Back ">
+	</form>
+
+
+
+	
+
+</body>
+</html>
